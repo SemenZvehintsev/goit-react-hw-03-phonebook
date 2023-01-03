@@ -12,14 +12,21 @@ export class App extends Component {
     filter: ''
   }
 
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('contacts'))) {
+    this.setState({contacts: JSON.parse(localStorage.getItem('contacts'))})}
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   handleAdd = (event) => {
     const {name, value} = event.target;
     this.setState({[name]: value});
   }
 
   handleAddContact = (name, number) => {
-    // this.state.contacts.map(({contactName}) => contactName.toLowerCase()).includes(name.toLowerCase()) ? 
-    // alert(`${name} is already in contacts.`) : 
     this.setState(({contacts}) => {
       return {contacts: [...contacts, {id: nanoid(), contactName: name, contactNumber: number}]}})
   }
