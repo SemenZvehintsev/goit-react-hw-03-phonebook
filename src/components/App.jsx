@@ -17,8 +17,9 @@ export class App extends Component {
     this.setState({contacts: JSON.parse(localStorage.getItem('contacts'))})}
   }
 
-  componentDidUpdate() {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  componentDidUpdate(_, prevstate) {
+    if (prevstate.contacts.length !== this.state.contacts.length) {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));}
   }
 
   handleAdd = (event) => {
